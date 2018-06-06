@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+if [[ "$USE_REPLICATION_SLOTS" == "1" ]]; then
+    SLOT_NAME="$(get_node_slot_name)"
+    echo ">>> Creating slots for the node: $SLOT_NAME"
+    PGCONNECT_TIMEOUT=$CHECK_PGCONNECT_TIMEOUT PGPASSWORD=$REPLICATION_PASSWORD  psql -h $CURRENT_REPLICATION_PRIMARY_HOST -U $REPLICATION_USER -p $REPLICATION_PRIMARY_PORT $REPLICATION_DB -tAc "select * from pg_create_physical_replication_slot('$SLOT_NAME')"
+fi

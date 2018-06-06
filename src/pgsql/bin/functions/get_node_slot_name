@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [[ "$1" != "" ]]; then
+    _NODE_ID="$1"
+else
+    _NODE_ID=$(get_node_id)
+fi
+
+echo $REPMGR_SLOT_NAME_PREFIX$_NODE_ID
