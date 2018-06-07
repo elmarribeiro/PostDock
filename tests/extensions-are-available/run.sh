@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 docker-compose up -d postgres_ext
-sleep 30
+docker-compose exec  postgres_ext wait_local_postgres
 set -e
 
 for EXTENSION in postgis pglogical pgl_ddl_deploy pg_repack;

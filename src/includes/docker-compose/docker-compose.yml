@@ -214,6 +214,10 @@ services:
           CLEAN_OVER_REWIND: 0
           CONFIGS_DELIMITER_SYMBOL: ;
           CONFIGS: "listen_addresses:'*';shared_preload_libraries:'pglogical'"
+        networks:
+            cluster:
+                aliases:
+                    - postgres_ext
     postgres_conf:
         build:
           context: ../src/
@@ -225,9 +229,13 @@ services:
           POSTGRES_USER: monkey_user
           POSTGRES_DB: monkey_db
           CLEAN_OVER_REWIND: 0
-          CONFIGS: "listen_addresses)'some_host'|max_replication_slots)55"
+          CONFIGS: "listen_addresses)'*'|max_replication_slots)55"
           CONFIGS_DELIMITER_SYMBOL: "|"
           CONFIGS_ASSIGNMENT_SYMBOL: ")"
+        networks:
+            cluster:
+                aliases:
+                    - postgres_conf
     pgpool_conf:
         build:
             context: ../src
@@ -247,6 +255,10 @@ services:
         ports:
             - 5440:5432
             - 9897:9898 # PCP
+        networks:
+            cluster:
+                aliases:
+                    - pgpool_conf
     pgmaster2:
         build:
             context: ../src

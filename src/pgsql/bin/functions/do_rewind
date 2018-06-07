@@ -29,7 +29,7 @@ if [[ "$MASTER_SLAVE_SWITCH" == "1" ]] || [ "$TRY_TO_FOLLOW_CLUSTER_MASTER" == "
     echo ">>>>>> Restoring configs"
 
     gosu postgres echo "standby_mode = 'on'
-primary_conninfo = 'user=$REPLICATION_USER password=$REPLICATION_PASSWORD connect_timeout=2 host=$CURRENT_REPLICATION_PRIMARY_HOST port=$REPLICATION_PRIMARY_PORT application_name=$NODE_NAME'
+primary_conninfo = 'user=$REPLICATION_USER password=$REPLICATION_PASSWORD connect_timeout=$CHECK_PGCONNECT_TIMEOUT host=$CURRENT_REPLICATION_PRIMARY_HOST port=$REPLICATION_PRIMARY_PORT application_name=$NODE_NAME'
 recovery_target_timeline = 'latest'
 primary_slot_name = $(get_node_slot_name)" > $PGDATA/recovery.conf
 fi

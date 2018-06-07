@@ -1,7 +1,7 @@
 
 ##########################################################################
 ##                         AUTO-GENERATED FILE                          ##
-##               BUILD_NUMBER=Thu Jun  7 08:21:15 +07 2018              ##
+##               BUILD_NUMBER=Thu Jun  7 16:25:07 +07 2018              ##
 ##########################################################################
 
 FROM postgres:9.5
@@ -14,7 +14,7 @@ RUN apt-get update --fix-missing && \
 RUN TEMP_DEB="$(mktemp)" && \
     wget -O "$TEMP_DEB" "https://repmgr.org/download/packages/dev-snapshot-2018-06-06/deb/pool/main/r/repmgr/repmgr-common_4.0.5~git256.g63bdc19-1.stretch+1_all.deb" && \
     dpkg -i "$TEMP_DEB" && rm -f "$TEMP_DEB" && \
-    wget -O "$TEMP_DEB" "https://repmgr.org/download/packages/dev-snapshot-2018-06-06/deb/pool/main/r/repmgr/repmgr_4.0.5~git256.g63bdc19-1.stretch+1_all.deb" && \
+    wget -O "$TEMP_DEB" "https://repmgr.org/download/packages/dev-snapshot-2018-06-06/deb/pool/main/r/repmgr/postgresql-$PG_MAJOR-repmgr_4.0.5~git256.g63bdc19-1.stretch+1_amd64.deb" && \
     (dpkg -i "$TEMP_DEB" || apt-get install -y -f) && rm -f "$TEMP_DEB"
 
 
@@ -108,7 +108,7 @@ ENV MASTER_RESPONSE_TIMEOUT 20
 ENV LOG_LEVEL INFO
 ENV CHECK_PGCONNECT_TIMEOUT 10
 ENV REPMGR_SLOT_NAME_PREFIX repmgr_slot_
-ENV LAUNCH_RECOVERY_CHECK_INTERVAL 30
+ENV LAUNCH_RECOVERY_CHECK_INTERVAL 15
 
 COPY ./pgsql/bin /usr/local/bin/cluster
 RUN chmod -R +x /usr/local/bin/cluster
